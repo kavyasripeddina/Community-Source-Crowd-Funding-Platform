@@ -5,8 +5,8 @@ const Donation = require('../models/Donation');
 // @route POST /api/campaigns
 const createCampaign = async (req, res) => {
   const { title, description, category, goalAmount, deadline, beneficiary, location, tags } = req.body;
-  const image = req.files && req.files.image && req.files.image[0] ? `/uploads/${req.files.image[0].filename}` : '';
-  const proofDocument = req.files && req.files.proofDocument && req.files.proofDocument[0] ? `/uploads/${req.files.proofDocument[0].filename}` : '';
+  const image = req.files?.image?.[0]?.path || '';
+const proofDocument = req.files?.proofDocument?.[0]?.path || '';
   const campaign = await Campaign.create({
     title,
     description,
@@ -19,7 +19,7 @@ const createCampaign = async (req, res) => {
     proofDocument,
     creator: req.user._id,
     tags: tags ? tags.split(',').map((t) => t.trim()) : [],
-     status: 'approved',
+    status: 'approved',
   });
   res.status(201).json({ success: true, message: 'Campaign created and pending approval', data: campaign });
 };
