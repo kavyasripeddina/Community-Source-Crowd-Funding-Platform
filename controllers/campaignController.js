@@ -80,8 +80,13 @@ const updateCampaign = async (req, res) => {
   if (beneficiary) campaign.beneficiary = beneficiary;
   if (location) campaign.location = location;
   if (tags) campaign.tags = tags.split(',').map((t) => t.trim());
-  if (req.files && req.files.image && req.files.image[0]) campaign.image = `/uploads/${req.files.image[0].filename}`;
-  if (req.files && req.files.proofDocument && req.files.proofDocument[0]) campaign.proofDocument = `/uploads/${req.files.proofDocument[0].filename}`;
+  if (req.files?.image?.[0]) {
+  campaign.image = req.files.image[0].path;
+}
+
+if (req.files?.proofDocument?.[0]) {
+  campaign.proofDocument = req.files.proofDocument[0].path;
+}
   // Reset to pending if edited by user (not admin)
   if (req.user.role !== 'admin') campaign.status = 'pending';
   const updated = await campaign.save();
