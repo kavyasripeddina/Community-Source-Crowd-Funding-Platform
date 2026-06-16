@@ -25,7 +25,7 @@ app.use(cors({
      'https://community-source-crowd-funding-plat.vercel.app'
   ],
   credentials: true,
-}));s
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
