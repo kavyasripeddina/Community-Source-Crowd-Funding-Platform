@@ -19,6 +19,7 @@ const createCampaign = async (req, res) => {
     proofDocument,
     creator: req.user._id,
     tags: tags ? tags.split(',').map((t) => t.trim()) : [],
+     status: 'approved',
   });
   res.status(201).json({ success: true, message: 'Campaign created and pending approval', data: campaign });
 };
